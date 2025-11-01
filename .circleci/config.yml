@@ -1,0 +1,42 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.10  # Imagen moderna con soporte actual
+    working_directory: ~/repo
+
+    steps:
+      # Step 1: Obtener código del repositorio
+      - checkout
+
+      # Step 2: Instalar dependencias en un entorno virtual
+      - run:
+          name: Install dependencies
+          command: |
+            python -m venv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+
+      # Step 3: Ejecutar flake8 y pytest
+      - run:
+          name: Run linters and tests
+          command: |
+            . venv/bin/activate
+            flake8 --exclude=venv* --statistics
+            pytest -v --junitxml=test-results/junit.xml
+
+      # (Opcional) Guardar resultados y artefactos
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - build
+
