@@ -1,25 +1,13 @@
-import random
+def saludar(nombre: str) -> str:
+    """
+    Devuelve un saludo personalizado.
+    Si el nombre está vacío o no es texto, lanza ValueError.
+    """
+    if not isinstance(nombre, str) or not nombre.strip():
+        raise ValueError("Nombre inválido")
+    return f"Hola, {nombre.strip()}!"
 
+if __name__ == "__main__":
+    persona = input("¿Cómo te llamas? ")
+    print(saludar(persona))
 
-def saludo1():
-    return "Hola"
-
-
-def saludo2():
-    return "Buenos días"
-
-
-def saludo3():
-    return "Hola, ¿Qué tal?"
-
-
-saludo = random.randint(0, 2)
-
-if saludo == 0:
-    print(saludo1())
-elif saludo == 1:
-    print(saludo2())
-elif saludo == 2:
-    print(saludo3())
-else:
-    print("Adios")

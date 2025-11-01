@@ -1,13 +1,17 @@
-import saludar
+import pytest
+from saludar import saludar
 
+def test_saludo_correcto():
+    assert saludar("Mariana") == "Hola, Mariana!"
 
-class TestSaludar:
+def test_saludo_con_espacios():
+    assert saludar("  Ana  ") == "Hola, Ana!"
 
-    def test_saludo1(self):
-        assert "Hola" == saludar.saludo1()
+def test_nombre_vacio():
+    with pytest.raises(ValueError):
+        saludar("")
 
-    def test_saludo2(self):
-        assert "Buenos días" == saludar.saludo2()
+def test_nombre_no_texto():
+    with pytest.raises(ValueError):
+        saludar(123)
 
-    def test_saludo3(self):
-        assert "Hola, ¿Qué tal?" == saludar.saludo3()
