@@ -13,8 +13,8 @@ jobs:
       # 2. Restaurar dependencias instaladas anteriormente
       - restore_cache:
           keys:
-            - v1-pip-{{ checksum "requirements.txt" }}
-            - v1-pip-
+            - v3-pip-{{ checksum "requirements.txt" }}
+            - v3-pip-
 
       # 3. Crear entorno virtual e instalar dependencias
       - run:
@@ -29,7 +29,7 @@ jobs:
       - save_cache:
           paths:
             - venv
-          key: v1-pip-{{ checksum "requirements.txt" }}
+          key: v3-pip-{{ checksum "requirements.txt" }}
 
       # 5. Ejecutar flake8 (limpieza de código)
       - run:
