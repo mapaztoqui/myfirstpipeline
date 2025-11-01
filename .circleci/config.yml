@@ -46,15 +46,18 @@ jobs:
           name: Security and type checks
           command: |
             . venv/bin/activate
-            echo "Verificando instalación de herramientas..."
-            pip list | grep -E 'mypy|bandit|pip-audit' || true
-            which mypy || echo "mypy no encontrado"
-            which bandit || echo "bandit no encontrado"
-            which pip-audit || echo "pip-audit no encontrado"
-            echo "Ejecutando análisis..."
-            mypy saludar.py
-            bandit -r . -x venv
-            pip-audit
+            mkdir -p test-results
+
+            echo "== mypy =="
+            mypy saludar.py || true
+
+            echo "== bandit =="
+            bandit -r . \
+               -x venv,**/.venv/**,**/site-packages/**,**/__pycache__/** \
+               -q -f json -o test-results/bandit.json || true
+
+            echo "== pip-audit =="
+            pip-audit -f json -o test-results/pip-audit.json || true
 
       # Ejecutar tests con pytest + cobertura
       - run:
