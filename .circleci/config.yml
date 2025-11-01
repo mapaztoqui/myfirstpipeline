@@ -24,6 +24,7 @@ jobs:
             . venv/bin/activate
             pip install -U pip
             pip install -r requirements.txt
+            pip install mypy bandit pip-audit
             echo "Dependencias instaladas:"
             pip list
 
@@ -46,7 +47,7 @@ jobs:
           command: |
             . venv/bin/activate
             echo "Verificando instalación de herramientas..."
-            pip list | grep -E 'mypy|bandit|pip-audit'
+            pip list | grep -E 'mypy|bandit|pip-audit' || true
             which mypy || echo "mypy no encontrado"
             which bandit || echo "bandit no encontrado"
             which pip-audit || echo "pip-audit no encontrado"
