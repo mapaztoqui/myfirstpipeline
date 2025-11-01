@@ -1,8 +1,12 @@
-FROM alpine:3.12
+FROM python:3.10-slim
 
-WORKDIR /myfirstpipeline
+WORKDIR /app
 
-ADD . /myfirstpipeline
+COPY requirements.txt .
 
-RUN apk add python3
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY saludar.py .
+
+CMD ["python", "saludar.py"]
 
